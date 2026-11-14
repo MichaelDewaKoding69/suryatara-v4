@@ -1,0 +1,28 @@
+/* Footer dan tombol WhatsApp */
+
+.footer-roemah {
+    background: var(--cream-2); color: #2d2d2d; padding: 44px 0 24px; margin-top: auto; border-top: 1px solid var(--border);
+}
+.footer-brand { font-size: 26px; font-weight: 700; color: var(--primary); font-family: Georgia, serif; }
+.footer-title { font-weight: 600; font-size: 13px; margin-bottom: 12px; color: var(--primary); }
+.footer-link { display: block; color: #4a4a4a; margin-bottom: 7px; font-size: 13px; }
+.footer-link:hover { color: var(--primary); text-decoration: underline; }
+.footer-roemah > .container { max-width: 1184px; }
+
+.footer-bottom {
+    border-top: 1px solid rgba(0,0,0,.1); margin-top: 28px; padding-top: 16px; font-size: 12px; color: #777;
+}
+
+.wa-bubble {
+    position: fixed; right: 20px; bottom: 20px; z-index: 1040; display: inline-flex; align-items: center; gap: 8px; background: #25a55a; color: #fff; padding: 9px 14px; border-radius: 4px; font-size: 13px; font-weight: 600;
+}
+.wa-bubble:hover { background: #1e8a4b; color: #fff; }
+.wa-bubble i { font-size: 18px; }
+
+@media (max-width: 768px) {
+    .wa-bubble span { display: none; }
+}
+
+@media print {
+    .footer-roemah, .wa-bubble { display: none !important; }
+}

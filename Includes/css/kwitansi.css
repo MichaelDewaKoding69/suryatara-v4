@@ -1,0 +1,50 @@
+/* Halaman kwitansi */
+
+.page-wrap { width: min(1160px, calc(100% - 40px)); margin: 0 auto; padding: 28px 0 64px; }
+.page-wrap.narrow { width: min(880px, calc(100% - 40px)); }
+
+.btn-brown, .btn-outline-brown {
+    display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+    height: 42px; padding: 0 18px; border-radius: 4px; border: 1px solid transparent;
+    font: inherit; font-weight: 600; font-size: 14px; cursor: pointer; white-space: nowrap;
+}
+.btn-brown { background: var(--primary); color: #fff; }
+.btn-brown:hover { background: var(--primary-dark); color: #fff; }
+.btn-outline-brown { background: #fff; color: var(--primary); border-color: var(--border); }
+.btn-outline-brown:hover { border-color: var(--primary); color: var(--primary); }
+.btn-sm-x { height: 34px; padding: 0 12px; font-size: 13px; }
+.table-x { width: 100%; border-collapse: collapse; font-size: 13px; }
+
+.table-x th {
+    text-align: left; color: var(--text-secondary); font-weight: 600; font-size: 12px; padding: 8px 6px; border-bottom: 1px solid var(--border);
+}
+.table-x td { padding: 10px 6px; border-bottom: 1px solid var(--border-light); vertical-align: middle; }
+.table-x .num { text-align: right; white-space: nowrap; }
+
+.kwitansi {
+    background: #fff; border: 1px solid var(--border); padding: 32px; max-width: 800px; margin: 0 auto;
+}
+
+.kwitansi-head {
+    display: flex; justify-content: space-between; gap: 20px; align-items: flex-start; border-bottom: 2px solid var(--primary); padding-bottom: 16px; margin-bottom: 18px;
+}
+.kwitansi-head img { height: 56px; }
+
+.kwitansi-head h2 {
+    font-family: Georgia, serif; color: var(--primary); margin: 0; letter-spacing: 2px; font-size: 24px; text-align: right;
+}
+
+.kwitansi-stamp {
+    display: inline-block; border: 2px solid var(--success); color: var(--success); padding: 4px 14px; font-weight: 700; letter-spacing: 2px; transform: rotate(-4deg);
+}
+
+@media (max-width: 768px) {
+    .page-wrap { width: calc(100% - 28px); }
+    .kwitansi { padding: 18px; }
+}
+
+@media print {
+    .no-print { display: none !important; }
+    .kwitansi { border: 0; padding: 0; }
+    .page-wrap { padding: 0; width: 100%; }
+}

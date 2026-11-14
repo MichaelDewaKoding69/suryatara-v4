@@ -1,0 +1,53 @@
+/* Halaman carousel */
+
+.hero-carousel { position: relative; overflow: hidden; line-height: 0; background: #3a261d; }
+.carousel-container { display: grid; position: relative; }
+
+.carousel-slide {
+    grid-area: 1 / 1; opacity: 0; visibility: hidden; transition: opacity .6s ease, visibility .6s; position: relative;
+}
+.carousel-slide.active { opacity: 1; visibility: visible; z-index: 1; }
+
+.carousel-slide {
+    height: 420px; background: #3a261d url('../../images/hero-golden-rice.jpg') center / cover no-repeat;
+}
+
+.carousel-overlay {
+    background: linear-gradient(90deg, rgba(40,25,18,.78) 0%, rgba(40,25,18,.5) 40%, rgba(40,25,18,0) 70%);
+}
+.carousel-content h1, .carousel-content p { text-shadow: 0 2px 8px rgba(0,0,0,.35); }
+.carousel-overlay { position: absolute; inset: 0; display: flex; align-items: center; line-height: normal; }
+.carousel-content { width: min(1160px, calc(100% - 48px)); margin: 0 auto; color: #fff; }
+
+.carousel-content h1 {
+    color: #fff; margin: 0 0 10px; font-family: Georgia, serif; font-size: clamp(24px, 3.6vw, 44px); max-width: 540px; font-weight: 700;
+}
+.carousel-content p { margin: 0 0 20px; font-size: 15px; max-width: 440px; color: rgba(255,255,255,.88); }
+
+.carousel-button {
+    display: inline-block; padding: 11px 22px; border-radius: 4px; background: var(--accent); color: #fff; font-weight: 600;
+}
+.carousel-button:hover { background: var(--accent-dark); color: #fff; }
+
+.carousel-arrow {
+    position: absolute; top: 50%; transform: translateY(-50%); z-index: 3; width: 38px; height: 38px; border: 0; border-radius: 2px; background: rgba(255,255,255,.8); color: var(--primary); font-size: 16px; line-height: 1; cursor: pointer;
+}
+.carousel-prev { left: 14px; }
+.carousel-next { right: 14px; }
+
+.carousel-indicators-x {
+    position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; z-index: 3; line-height: 0;
+}
+
+.carousel-dot {
+    width: 22px; height: 3px; border: 0; background: rgba(255,255,255,.5); cursor: pointer; padding: 0;
+}
+.carousel-dot.active { background: #fff; }
+
+@media (max-width: 768px) {
+    .carousel-arrow { display: none; }
+    .carousel-slide { height: 260px; }
+    .carousel-overlay { background: rgba(40,25,18,.55); }
+    .carousel-content h1 { font-size: 24px; }
+    .carousel-content p { font-size: 13px; }
+}
