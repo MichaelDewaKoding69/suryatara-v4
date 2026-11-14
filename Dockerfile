@@ -2,6 +2,7 @@
 FROM php:8.3-apache
 
 RUN docker-php-ext-install pdo_mysql \
+ && (a2dismod -f mpm_event mpm_worker || true) && a2enmod mpm_prefork \
  && sed -ri "s/Options Indexes FollowSymLinks/Options FollowSymLinks/" /etc/apache2/apache2.conf \
  && { echo 'upload_max_filesize = 10M'; echo 'post_max_size = 30M'; echo 'date.timezone = Asia/Jakarta'; } > /usr/local/etc/php/conf.d/suryatara.ini
 

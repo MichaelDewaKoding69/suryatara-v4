@@ -2,6 +2,11 @@
 # Dijalankan setiap container Railway menyala.
 set -e
 
+# 0. Pastikan hanya satu MPM Apache yang aktif (prefork, yang dipakai mod_php).
+#    Tanpa ini Railway bisa gagal start dengan "More than one MPM loaded".
+rm -f /etc/apache2/mods-enabled/mpm_event.* /etc/apache2/mods-enabled/mpm_worker.*
+[ -e /etc/apache2/mods-enabled/mpm_prefork.load ] || a2enmod mpm_prefork >/dev/null
+
 # 1. Apache mendengarkan port dari Railway (variabel PORT)
 PORT="${PORT:-8080}"
 sed -ri "s/^Listen .*/Listen ${PORT}/" /etc/apache2/ports.conf
