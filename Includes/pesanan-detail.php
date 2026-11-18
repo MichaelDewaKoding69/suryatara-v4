@@ -155,6 +155,10 @@ require __DIR__ . '/header.php';
                 <div class="summary-row"><span>Ongkir</span><strong><?= rupiah($totalOngkir) ?></strong></div>
                 <div class="summary-divider"></div>
                 <div class="summary-total"><span>Total</span><span><?= rupiah($o['total_harga']) ?></span></div>
+                <?php if (!in_array($o['status_pesanan'], ['Dibatalkan'], true)): ?>
+                    <div class="summary-row"><span>Kode unik transfer</span><strong>+ <?= rupiah(kode_unik($id)) ?></strong></div>
+                    <div class="summary-row"><span>Total transfer</span><strong><?= rupiah(total_transfer($o)) ?></strong></div>
+                <?php endif; ?>
                 <div class="d-grid gap-2 mt-3">
                     <?php if ($o['status_pesanan'] === 'Belum Melakukan Pembayaran'): ?>
                         <a href="<?= url('Includes/bayar.php?id=' . $id) ?>" class="btn-orange">Bayar &amp; unggah bukti</a>

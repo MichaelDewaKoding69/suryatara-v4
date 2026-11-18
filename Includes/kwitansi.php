@@ -82,7 +82,8 @@ require __DIR__ . '/header.php';
             <?php endforeach; ?>
             <tr><td colspan="5" class="num">Total harga produk</td><td class="num"><?= rupiah($totalProduk) ?></td></tr>
             <tr><td colspan="5" class="num">Total ongkos kirim</td><td class="num"><?= rupiah($o['ongkir']) ?></td></tr>
-            <tr><td colspan="5" class="num"><strong>TOTAL DIBAYAR</strong></td><td class="num"><strong style="color:var(--primary);font-size:16px"><?= rupiah($o['total_harga']) ?></strong></td></tr>
+            <tr><td colspan="5" class="num">Kode unik transfer</td><td class="num"><?= rupiah(kode_unik((int)$o['id_pesanan'])) ?></td></tr>
+            <tr><td colspan="5" class="num"><strong>TOTAL DIBAYAR</strong></td><td class="num"><strong style="color:var(--primary);font-size:16px"><?= rupiah(total_transfer($o)) ?></strong></td></tr>
             </tbody>
         </table>
 

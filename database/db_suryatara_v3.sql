@@ -19,6 +19,7 @@
 --    pesanan_produk.subtotal      = jumlah x (harga_satuan + ongkir_satuan)
 --    pesanan.total_harga          = jumlah semua subtotal
 --    pengiriman.ongkir            = jumlah x ongkir_satuan seluruh produk
+--    nominal transfer             = total_harga + kode unik (1-999, dari id pesanan), disimpan di pembayaran.jumlah_bayar
 --
 --  Alur status:
 --    pesanan    : Belum Melakukan Pembayaran -> Sudah Upload Bukti -> Diproses -> Dikirim -> Selesai (atau Dibatalkan)
@@ -416,15 +417,15 @@ INSERT INTO `pesanan_produk` (`id_pesanan`, `id_produk`, `jumlah`, `harga_satuan
 (10, 2, 1, 160000, 40000, 200000);
 
 INSERT INTO `pembayaran` (`id_pembayaran`, `id_pesanan`, `tanggal_pembayaran`, `jumlah_bayar`, `bukti_pembayaran`, `status_pembayaran`, `catatan`) VALUES
-(1, 1, DATE_SUB(NOW(), INTERVAL 26 DAY),   204000, 'bukti_rb0001.png',         'Disetujui', NULL),
-(2, 2, DATE_SUB(NOW(), INTERVAL 21 DAY),   217000, 'bukti_rb0002.png',         'Disetujui', NULL),
-(3, 3, DATE_SUB(NOW(), INTERVAL 15 DAY),   109000, 'bukti_rb0003.png',         'Disetujui', NULL),
-(4, 4, DATE_SUB(NOW(), INTERVAL 9 DAY),    210000, 'bukti_rb0004.png',         'Disetujui', NULL),
-(5, 5, DATE_SUB(NOW(), INTERVAL 6 DAY),    416000, 'bukti_rb0005.png',         'Disetujui', NULL),
-(6, 6, DATE_SUB(NOW(), INTERVAL 3 DAY),    184000, 'bukti_rb0006.png',         'Sudah Upload Bukti', NULL),
+(1, 1, DATE_SUB(NOW(), INTERVAL 26 DAY),   204001, 'bukti_rb0001.png',         'Disetujui', NULL),
+(2, 2, DATE_SUB(NOW(), INTERVAL 21 DAY),   217002, 'bukti_rb0002.png',         'Disetujui', NULL),
+(3, 3, DATE_SUB(NOW(), INTERVAL 15 DAY),   109003, 'bukti_rb0003.png',         'Disetujui', NULL),
+(4, 4, DATE_SUB(NOW(), INTERVAL 9 DAY),    210004, 'bukti_rb0004.png',         'Disetujui', NULL),
+(5, 5, DATE_SUB(NOW(), INTERVAL 6 DAY),    416005, 'bukti_rb0005.png',         'Disetujui', NULL),
+(6, 6, DATE_SUB(NOW(), INTERVAL 3 DAY),    184006, 'bukti_rb0006.png',         'Sudah Upload Bukti', NULL),
 (7, 7, DATE_SUB(NOW(), INTERVAL 2 DAY),    200000, 'bukti_rb0007_ditolak.png', 'Ditolak', 'Nominal transfer kurang dari total tagihan'),
-(8, 7, DATE_SUB(NOW(), INTERVAL 20 HOUR),  214000, 'bukti_rb0007.png',         'Sudah Upload Bukti', NULL),
-(9, 8, DATE_SUB(NOW(), INTERVAL 1 DAY),    430000, 'bukti_rb0008.png',         'Sudah Upload Bukti', NULL);
+(8, 7, DATE_SUB(NOW(), INTERVAL 20 HOUR),  214007, 'bukti_rb0007.png',         'Sudah Upload Bukti', NULL),
+(9, 8, DATE_SUB(NOW(), INTERVAL 1 DAY),    430008, 'bukti_rb0008.png',         'Sudah Upload Bukti', NULL);
 
 INSERT INTO `pengiriman` (`id_pengiriman`, `id_pembayaran`, `id_jasa_kurir`, `alamat_pengiriman`, `ongkir`, `no_resi`, `tanggal_pengiriman`) VALUES
 (1, 1, 1,    'Budi Santoso (081234567801)\nJl. Raya Cipondoh No. 12, RT 02/RW 05, Tangerang', 40000, 'JNE0102938475', DATE_SUB(NOW(), INTERVAL 24 DAY)),

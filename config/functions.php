@@ -390,6 +390,26 @@ function ongkir_satuan(float $beratKg): float
     return round($beratKg * TARIF_ONGKIR_PER_KG);
 }
 
+/**
+ * Kode unik transfer (1-999), dihitung dari id pesanan.
+ * Ditambahkan ke tagihan supaya setiap transfer punya nominal berbeda dan admin mudah
+ * mencocokkan transfer dengan pesanannya. Tidak disimpan di database (ERD tetap) dan
+ * tidak dihitung sebagai penjualan di laporan; nominal transfernya tersimpan di pembayaran.jumlah_bayar.
+ */
+function kode_unik(int $idPesanan): int
+{
+    return ($idPesanan - 1) % 999 + 1;
+}
+
+/** Nominal yang harus ditransfer pelanggan = total pesanan + kode unik. */
+function total_transfer(array $pesanan): float
+{
+    return (float)$pesanan['total_harga'] + kode_unik((int)$pesanan['id_pesanan']);
+}
+
+/** Ekspresi SQL yang sama dengan total_transfer(), untuk filter di query (alias tabel pesanan: ps). */
+const SQL_TOTAL_TRANSFER = '(ps.total_harga + ((ps.id_pesanan - 1) % 999 + 1))';
+
 /** Kode tampilan pesanan, contoh RB-0007 (diturunkan dari id_pesanan). */
 function kode(int $idPesanan): string
 {

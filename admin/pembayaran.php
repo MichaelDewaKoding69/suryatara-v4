@@ -92,9 +92,9 @@ if ($f['sampai'] !== '') {
     $params[':sampai'] = $f['sampai'] . ' 23:59:59';
 }
 if ($f['cocok'] === 'sesuai') {
-    $where[] = 'pb.jumlah_bayar = ps.total_harga';
+    $where[] = 'pb.jumlah_bayar = ' . SQL_TOTAL_TRANSFER;
 } elseif ($f['cocok'] === 'tidak') {
-    $where[] = 'pb.jumlah_bayar <> ps.total_harga';
+    $where[] = 'pb.jumlah_bayar <> ' . SQL_TOTAL_TRANSFER;
 }
 
 $orderBy = [
@@ -141,13 +141,13 @@ if ($list) {
 
 $payload = [];
 foreach ($list as $p) {
-    $selisih = (float)$p['jumlah_bayar'] - (float)$p['total_harga'];
+    $selisih = (float)$p['jumlah_bayar'] - total_transfer($p);
     $payload[(int)$p['id_pembayaran']] = [
         'id' => (int)$p['id_pembayaran'], 'kode' => kode((int)$p['id_pesanan']), 'id_pesanan' => (int)$p['id_pesanan'],
         'img' => upload_url('bukti_transfer', $p['bukti_pembayaran']), 'file' => $p['bukti_pembayaran'],
         'pelanggan' => $p['nama_pelanggan'], 'email' => $p['email'], 'hp' => $p['no_telepon'],
         'tgl' => tgl($p['tanggal_pembayaran'], true), 'tgl_pesan' => tgl($p['tanggal_pesanan'], true),
-        'jumlah' => rupiah($p['jumlah_bayar']), 'tagihan' => rupiah($p['total_harga']),
+        'jumlah' => rupiah($p['jumlah_bayar']), 'tagihan' => rupiah(total_transfer($p)), 'kode_unik' => kode_unik((int)$p['id_pesanan']),
         'selisih' => $selisih, 'selisih_txt' => ($selisih > 0 ? '+' : ($selisih < 0 ? '-' : '')) . rupiah(abs($selisih)),
         'status' => $p['status_pembayaran'], 'status_class' => status_class($p['status_pembayaran']),
         'status_pesanan' => $p['status_pesanan'], 'catatan' => $p['catatan'], 'alamat' => $p['alamat_pengiriman'],
@@ -288,6 +288,8 @@ page_header('Konfirmasi Pembayaran',
                 <dl>
                     <dt>Pelanggan</dt><dd id="bpPelanggan"></dd>
                     <dt>Waktu transfer</dt><dd id="bpTgl"></dd>
+                    <dt>Nominal transfer</dt><dd id="bpNominal"></dd>
+                    <dt>Harus ditransfer</dt><dd id="bpTagihan"></dd>
                     <dt>Tanggal pesan</dt><dd id="bpTglPesan"></dd>
                     <dt>Status pesanan</dt><dd id="bpStatusPesanan"></dd>
                     <dt>Catatan</dt><dd id="bpCatatan"></dd>
@@ -362,6 +364,8 @@ page_header('Konfirmasi Pembayaran',
         $('bpOpen').href = d.img; $('bpDownload').href = d.img; $('bpDownload').setAttribute('download', d.file);
         $('bpPelanggan').innerHTML = esc(d.pelanggan) + '<span class="cell-sub">' + esc(d.email) + ' &middot; ' + esc(d.hp) + '</span>';
         $('bpTgl').textContent = d.tgl; $('bpTglPesan').textContent = d.tgl_pesan;
+        $('bpNominal').innerHTML = esc(d.jumlah) + ' ' + (d.selisih == 0 ? '<span class="match ok">Sesuai</span>' : '<span class="match bad">Selisih ' + esc(d.selisih_txt) + '</span>');
+        $('bpTagihan').innerHTML = esc(d.tagihan) + '<span class="cell-sub">termasuk kode unik ' + String(d.kode_unik).padStart(3, '0') + '</span>';
         $('bpStatusPesanan').innerHTML = esc(d.status_pesanan);
         $('bpCatatan').textContent = d.catatan && d.status !== 'Ditolak' ? d.catatan : '-';
         $('bpAlamat').innerText = d.alamat || '-';

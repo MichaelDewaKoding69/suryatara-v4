@@ -49,7 +49,7 @@ $old = [
     'alamat'       => trim((string)($_POST['alamat'] ?? $alamatAwal['alamat'])),
     'kota'         => trim((string)($_POST['kota'] ?? $alamatAwal['kota'])),
     'catatan'      => trim((string)($_POST['catatan'] ?? '')),
-    'jumlah_bayar' => $_POST['jumlah_bayar'] ?? (int)$pesanan['total_harga'],
+    'jumlah_bayar' => $_POST['jumlah_bayar'] ?? (int)total_transfer($pesanan),
 ];
 $error = '';
 
@@ -110,7 +110,11 @@ require __DIR__ . '/header.php';
     <div class="two-col" style="grid-template-columns:minmax(0,1fr) 380px">
         <div>
             <div class="card-box">
-                <div class="tagihan-line"><span>Total yang harus dibayar</span><strong><?= rupiah($pesanan['total_harga']) ?></strong></div>
+                <div class="summary-row"><span>Total pesanan</span><strong><?= rupiah($pesanan['total_harga']) ?></strong></div>
+                <div class="summary-row"><span>Kode unik</span><strong>+ <?= rupiah(kode_unik($id)) ?></strong></div>
+                <div class="tagihan-line"><span>Total yang harus ditransfer</span><span><strong><?= rupiah(total_transfer($pesanan)) ?></strong>
+                    <button type="button" class="copy-btn" data-copy="<?= (int)total_transfer($pesanan) ?>">Salin</button></span></div>
+                <p class="kode-unik-note">Transfer <strong>tepat</strong> sampai 3 digit terakhir (<?= str_pad((string)kode_unik($id), 3, '0', STR_PAD_LEFT) ?>) supaya pembayaran Anda cepat dikenali admin.</p>
                 <div class="rekening-box">
                     <div class="lbl">Transfer ke rekening <?= h(REKENING_BANK) ?></div>
                     <div class="no"><?= h(REKENING_NOMOR) ?> <button type="button" class="copy-btn" data-copy="<?= h(REKENING_NOMOR) ?>">Salin</button></div>

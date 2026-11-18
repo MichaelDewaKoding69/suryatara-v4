@@ -127,3 +127,11 @@
 @media print {
     .page-wrap { padding: 0; width: 100%; }
 }
+
+.kode-unik-note { font-size: 12.5px; color: var(--text-secondary); margin: 8px 0 0; }
+.tagihan-line .copy-btn { margin-left: 8px; }
+.summary-row {
+    display: flex; justify-content: space-between; gap: 10px; margin: 7px 0; color: var(--text-secondary); font-size: 13px;
+}
+.summary-row strong { color: var(--text); font-weight: 600; }
+.summary-divider { height: 1px; background: var(--border-light); margin: 12px 0; }
